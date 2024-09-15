@@ -266,7 +266,7 @@ public class EntityPlayerSP extends EntityPlayer {
     }
 
     public void addChatMessage(String s) {
-        mc.ingameGUI.addChatMessageTranslate(s);
+        mc.inGameGUI.addChatMessageTranslate(s);
     }
 
     public void addStat(StatBase statbase, int i) {

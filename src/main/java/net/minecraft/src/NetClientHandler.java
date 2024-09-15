@@ -445,7 +445,7 @@ public class NetClientHandler extends NetHandler
 
     public void handleChat(Packet3Chat packet3chat)
     {
-        mc.ingameGUI.addChatMessage(packet3chat.message);
+        mc.inGameGUI.addChatMessage(packet3chat.message);
     }
 
     public void handleArmAnimation(Packet18Animation packet18animation)

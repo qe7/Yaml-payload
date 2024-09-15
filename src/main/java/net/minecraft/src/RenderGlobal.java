@@ -1390,7 +1390,7 @@ public class RenderGlobal
     {
         if(s != null)
         {
-            mc.ingameGUI.setRecordPlayingMessage((new StringBuilder()).append("C418 - ").append(s).toString());
+            mc.inGameGUI.setRecordPlayingMessage((new StringBuilder()).append("C418 - ").append(s).toString());
         }
         mc.sndManager.playStreaming(s, i, j, k, 1.0F, 1.0F);
     }

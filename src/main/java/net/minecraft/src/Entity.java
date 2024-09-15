@@ -474,6 +474,11 @@ public abstract class Entity
             {
                 nextStepDistance = (int)distanceWalkedModified + 1;
                 StepSound stepsound = Block.blocksList[j3].stepSound;
+
+                if (stepsound == null) {
+                	stepsound = Block.soundStoneFootstep;
+                }
+
                 if(worldObj.getBlockId(l, j1 + 1, l1) == Block.snow.blockID)
                 {
                     stepsound = Block.snow.stepSound;

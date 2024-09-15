@@ -4,7 +4,6 @@
 
 package net.minecraft.src;
 
-import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
 // Referenced classes of package net.minecraft.src:
@@ -73,12 +72,12 @@ public class GuiChat extends GuiScreen
 
     protected void mouseClicked(int var1, int var2, int var3) {
         if(var3 == 0) {
-           if(this.mc.ingameGUI.field_933_a != null) {
+           if(this.mc.inGameGUI.field_933_a != null) {
               if(this.message.length() > 0 && !this.message.endsWith(" ")) {
                  this.message = this.message + " ";
               }
 
-              this.message = this.message + this.mc.ingameGUI.field_933_a;
+              this.message = this.message + this.mc.inGameGUI.field_933_a;
               byte var4 = 100;
               if(this.message.length() > var4) {
                  this.message = this.message.substring(0, var4);
