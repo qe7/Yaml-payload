@@ -16,8 +16,6 @@ public class HUDModule extends Module {
 
     public HUDModule() {
         super("HUD", "Display information about the client", ModuleCategory.RENDER);
-
-        this.setToggled(true);
     }
 
     @Subscribe
