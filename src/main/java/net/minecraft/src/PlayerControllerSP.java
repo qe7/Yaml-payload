@@ -131,12 +131,12 @@ public class PlayerControllerSP extends PlayerController
     {
         if(curBlockDamage <= 0.0F)
         {
-            mc.ingameGUI.damageGuiPartialTime = 0.0F;
+            mc.inGameGUI.damageGuiPartialTime = 0.0F;
             mc.renderGlobal.damagePartialTime = 0.0F;
         } else
         {
             float f1 = prevBlockDamage + (curBlockDamage - prevBlockDamage) * f;
-            mc.ingameGUI.damageGuiPartialTime = f1;
+            mc.inGameGUI.damageGuiPartialTime = f1;
             mc.renderGlobal.damagePartialTime = f1;
         }
     }

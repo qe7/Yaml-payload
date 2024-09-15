@@ -1,7 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
-
 package net.minecraft.client;
 
 import io.github.qe7.Client;
@@ -20,11 +16,68 @@ import org.lwjgl.util.glu.GLU;
 import java.awt.*;
 import java.io.File;
 
-// Referenced classes of package net.minecraft.client:
-//            MinecraftApplet
+public abstract class Minecraft implements Runnable {
 
-public abstract class Minecraft
-        implements Runnable {
+    public static byte[] largeDataBuffer = new byte[0xa00000];
+    private static Minecraft theMinecraft;
+    public PlayerController playerController;
+    private boolean fullscreen;
+    private boolean hasCrashed;
+    public int displayWidth;
+    public int displayHeight;
+    private OpenGlCapsChecker glCapabilities;
+    private final Timer timer;
+    public World theWorld;
+    public RenderGlobal renderGlobal;
+    public EntityPlayerSP thePlayer;
+    public EntityLiving renderViewEntity;
+    public EffectRenderer effectRenderer;
+    public Session session;
+    public String minecraftUri;
+    public Canvas mcCanvas;
+    public boolean hideQuitButton;
+    public volatile boolean isGamePaused;
+    public RenderEngine renderEngine;
+    public FontRenderer fontRenderer;
+    public GuiScreen currentScreen;
+    public LoadingScreenRenderer loadingScreen;
+    public EntityRenderer entityRenderer;
+    private ThreadDownloadResources downloadResourcesThread;
+    private int ticksRan;
+    private int leftClickCounter;
+    private final int tempDisplayWidth;
+    private final int tempDisplayHeight;
+    public GuiAchievement guiAchievement;
+    public GuiIngame inGameGUI;
+    public boolean skipRenderWorld;
+    public ModelBiped playerModelBiped;
+    public MovingObjectPosition objectMouseOver;
+    public GameSettings gameSettings;
+    protected MinecraftApplet mcApplet;
+    public SoundManager sndManager;
+    public MouseHelper mouseHelper;
+    public TexturePackList texturePackList;
+    public File mcDataDir;
+    private ISaveFormat saveLoader;
+    public static long[] frameTimes = new long[512];
+    public static long[] tickTimes = new long[512];
+    public static int numRecordedFrameTimes = 0;
+    public static long hasPaidCheckTime = 0L;
+    private int field_35001_ab;
+    public StatFileWriter statFileWriter;
+    private String serverName;
+    private int serverPort;
+    private final TextureWaterFX textureWaterFX;
+    private final TextureLavaFX textureLavaFX;
+    private static File minecraftDir = null;
+    public volatile boolean running;
+    public String debug;
+    boolean isTakingScreenshot;
+    long prevFrameTime;
+    public boolean inGameHasFocus;
+    public boolean isRaining;
+    long systemTime;
+    private int joinPlayerCounter;
 
     public Minecraft(Component component, Canvas canvas, MinecraftApplet minecraftapplet, int i, int j, boolean flag) {
         fullscreen = false;
@@ -53,6 +106,7 @@ public abstract class Minecraft
         systemTime = System.currentTimeMillis();
         joinPlayerCounter = 0;
         StatList.func_27360_a();
+        tempDisplayWidth = i;
         tempDisplayHeight = j;
         fullscreen = flag;
         mcApplet = minecraftapplet;
@@ -83,8 +137,7 @@ public abstract class Minecraft
         serverPort = i;
     }
 
-    public void startGame()
-            throws LWJGLException {
+    public void startGame() throws LWJGLException {
         if (mcCanvas != null) {
             Graphics g = mcCanvas.getGraphics();
             if (g != null) {
@@ -175,7 +228,7 @@ public abstract class Minecraft
         } catch (Exception exception1) {
         }
         checkGLError("Post startup");
-        ingameGUI = new GuiIngame(this);
+        inGameGUI = new GuiIngame(this);
 
         Client.getInstance().initialize();
 
@@ -187,8 +240,7 @@ public abstract class Minecraft
         loadingScreen = new LoadingScreenRenderer(this);
     }
 
-    private void loadScreen()
-            throws LWJGLException {
+    private void loadScreen() throws LWJGLException {
         ScaledResolution scaledresolution = new ScaledResolution(gameSettings, displayWidth, displayHeight);
         GL11.glClear(16640);
         GL11.glMatrixMode(5889 /*GL_PROJECTION*/);
@@ -320,7 +372,7 @@ public abstract class Minecraft
             guiscreen = new GuiGameOver();
         }
         if (guiscreen instanceof GuiMainMenu) {
-            ingameGUI.clearChatMessages();
+            inGameGUI.clearChatMessages();
         }
         currentScreen = guiscreen;
         if (guiscreen != null) {
@@ -500,7 +552,7 @@ public abstract class Minecraft
 
     public void func_28002_e() {
         try {
-            field_28006_b = new byte[0];
+            largeDataBuffer = new byte[0];
             renderGlobal.func_28137_f();
         } catch (Throwable throwable) {
         }
@@ -522,7 +574,7 @@ public abstract class Minecraft
         if (Keyboard.isKeyDown(60)) {
             if (!isTakingScreenshot) {
                 isTakingScreenshot = true;
-                ingameGUI.addChatMessage(ScreenShotHelper.saveScreenshot(minecraftDir, displayWidth, displayHeight));
+                inGameGUI.addChatMessage(ScreenShotHelper.saveScreenshot(minecraftDir, displayWidth, displayHeight));
             }
         } else {
             isTakingScreenshot = false;
@@ -781,7 +833,7 @@ public abstract class Minecraft
             func_28001_B();
         }
         statFileWriter.func_27178_d();
-        ingameGUI.updateTick();
+        inGameGUI.updateTick();
         entityRenderer.getMouseOver(1.0F);
         if (thePlayer != null) {
             IChunkProvider ichunkprovider = theWorld.getIChunkProvider();
@@ -1350,66 +1402,4 @@ public abstract class Minecraft
             thePlayer.inventory.setCurrentItem(i, playerController instanceof PlayerControllerTest);
         }
     }
-
-    public static byte field_28006_b[] = new byte[0xa00000];
-    private static Minecraft theMinecraft;
-    public PlayerController playerController;
-    private boolean fullscreen;
-    private boolean hasCrashed;
-    public int displayWidth;
-    public int displayHeight;
-    private OpenGlCapsChecker glCapabilities;
-    private Timer timer;
-    public World theWorld;
-    public RenderGlobal renderGlobal;
-    public EntityPlayerSP thePlayer;
-    public EntityLiving renderViewEntity;
-    public EffectRenderer effectRenderer;
-    public Session session;
-    public String minecraftUri;
-    public Canvas mcCanvas;
-    public boolean hideQuitButton;
-    public volatile boolean isGamePaused;
-    public RenderEngine renderEngine;
-    public FontRenderer fontRenderer;
-    public GuiScreen currentScreen;
-    public LoadingScreenRenderer loadingScreen;
-    public EntityRenderer entityRenderer;
-    private ThreadDownloadResources downloadResourcesThread;
-    private int ticksRan;
-    private int leftClickCounter;
-    private int tempDisplayWidth;
-    private int tempDisplayHeight;
-    public GuiAchievement guiAchievement;
-    public GuiIngame ingameGUI;
-    public boolean skipRenderWorld;
-    public ModelBiped playerModelBiped;
-    public MovingObjectPosition objectMouseOver;
-    public GameSettings gameSettings;
-    protected MinecraftApplet mcApplet;
-    public SoundManager sndManager;
-    public MouseHelper mouseHelper;
-    public TexturePackList texturePackList;
-    public File mcDataDir;
-    private ISaveFormat saveLoader;
-    public static long frameTimes[] = new long[512];
-    public static long tickTimes[] = new long[512];
-    public static int numRecordedFrameTimes = 0;
-    public static long hasPaidCheckTime = 0L;
-    private int field_35001_ab;
-    public StatFileWriter statFileWriter;
-    private String serverName;
-    private int serverPort;
-    private TextureWaterFX textureWaterFX;
-    private TextureLavaFX textureLavaFX;
-    private static File minecraftDir = null;
-    public volatile boolean running;
-    public String debug;
-    boolean isTakingScreenshot;
-    long prevFrameTime;
-    public boolean inGameHasFocus;
-    public boolean isRaining;
-    long systemTime;
-    private int joinPlayerCounter;
-
 }

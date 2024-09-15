@@ -9,7 +9,6 @@ import java.nio.FloatBuffer;
 import java.util.Random;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.ContextCapabilities;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -673,7 +672,7 @@ public class EntityRenderer
             renderEndNanoTime = System.nanoTime();
             if(!mc.gameSettings.hideGUI || mc.currentScreen != null)
             {
-                mc.ingameGUI.renderGameOverlay(f, mc.currentScreen != null, k, i1);
+                mc.inGameGUI.renderGameOverlay(f, mc.currentScreen != null, k, i1);
             }
         } else
         {

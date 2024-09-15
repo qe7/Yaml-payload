@@ -1,5 +1,6 @@
 package io.github.qe7.features.impl.modules.api;
 
+import com.google.gson.JsonObject;
 import io.github.qe7.Client;
 import io.github.qe7.features.impl.commands.api.Command;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
@@ -7,9 +8,10 @@ import io.github.qe7.features.impl.modules.api.settings.impl.BooleanSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.DoubleSetting;
 import io.github.qe7.features.impl.modules.api.settings.impl.IntSetting;
 import io.github.qe7.utils.ChatUtil;
+import io.github.qe7.utils.configs.Serialized;
 import me.zero.alpine.listener.Subscriber;
 
-public abstract class Module extends Command implements Subscriber {
+public abstract class Module extends Command implements Serialized, Subscriber {
 
     private final ModuleCategory moduleCategory;
 
@@ -48,10 +50,17 @@ public abstract class Module extends Command implements Subscriber {
 
     public void setToggled(boolean toggled) {
         this.toggled = toggled;
+
+        if (toggled) {
+            onEnable();
+        } else {
+            onDisable();
+        }
     }
 
     public void toggle() {
         toggled = !toggled;
+
         if (toggled) {
             onEnable();
         } else {
@@ -154,6 +163,39 @@ public abstract class Module extends Command implements Subscriber {
                 ChatUtil.addPrefixChatMessage("Settings", "Invalid setting type");
                 return;
             }
+        }
+    }
+
+    @Override
+    public JsonObject serialize() {
+        final JsonObject object = new JsonObject();
+
+        object.addProperty("name", getName());
+        object.addProperty("description", getDescription());
+        object.addProperty("moduleCategory", getModuleCategory().name());
+        object.addProperty("keyBind", getKeyBind());
+        object.addProperty("toggled", isToggled());
+
+        final JsonObject settings = new JsonObject();
+
+        for (Setting<?> setting : Client.getInstance().getModuleManager().getSettingsByModule(this)) {
+            settings.add(setting.getName(), setting.serialize());
+        }
+
+        object.add("settings", settings);
+
+        return object;
+    }
+
+    @Override
+    public void deserialize(JsonObject object) {
+        setKeyBind(object.get("keyBind").getAsInt());
+        setToggled(object.get("toggled").getAsBoolean());
+
+        final JsonObject settings = object.getAsJsonObject("settings");
+
+        for (Setting<?> setting : Client.getInstance().getModuleManager().getSettingsByModule(this)) {
+            setting.deserialize(settings.getAsJsonObject(setting.getName()));
         }
     }
 }
