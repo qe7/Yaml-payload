@@ -4,7 +4,6 @@ import io.github.qe7.managers.impl.CommandManager;
 import io.github.qe7.managers.impl.ModuleManager;
 import me.zero.alpine.bus.EventBus;
 import me.zero.alpine.bus.EventManager;
-import net.minecraft.client.Minecraft;
 
 public final class Client {
 
@@ -23,8 +22,6 @@ public final class Client {
     }
 
     public void initialize() {
-        Minecraft.getMinecraft().session.username = "rg4";
-
         this.getModuleManager().initialize();
         this.getCommandManager().initialize();
     }
