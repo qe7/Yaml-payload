@@ -5,6 +5,7 @@ import io.github.qe7.events.KeyPressEvent;
 import io.github.qe7.features.impl.modules.api.Module;
 import io.github.qe7.features.impl.modules.api.settings.api.Setting;
 import io.github.qe7.features.impl.modules.impl.HUDModule;
+import io.github.qe7.features.impl.modules.impl.SlimeChunkModule;
 import io.github.qe7.features.impl.modules.impl.SprintModule;
 import io.github.qe7.managers.api.Manager;
 import me.zero.alpine.listener.Listener;
@@ -22,6 +23,7 @@ public final class ModuleManager extends Manager<Class<? extends Module>, Module
         final List<Module> modules = new ArrayList<>();
 
         modules.add(new HUDModule());
+        modules.add(new SlimeChunkModule());
         modules.add(new SprintModule());
 
         modules.forEach(module -> registerModule(module.getClass()));
