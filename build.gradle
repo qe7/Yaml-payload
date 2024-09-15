@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.github.qe7'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: 'workspace/bin', include: ['*.jar'])
+}
