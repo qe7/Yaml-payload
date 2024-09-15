@@ -11,14 +11,11 @@ public final class Client {
 
     private final EventBus eventBus = EventManager.builder().setName("client").build();
 
-    private final String name, version;
-
     private final ModuleManager moduleManager = new ModuleManager();
     private final CommandManager commandManager = new CommandManager();
 
     private Client() {
-        this.name = "Client";
-        this.version = "1.0.0";
+
     }
 
     public void initialize() {
@@ -32,14 +29,6 @@ public final class Client {
 
     public EventBus getEventBus() {
         return eventBus;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getVersion() {
-        return version;
     }
 
     public ModuleManager getModuleManager() {
