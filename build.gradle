@@ -7,8 +7,24 @@ version = '1.0.0'
 
 repositories {
     mavenCentral()
+
+    maven {
+        name = 'impactdevelopment-repo'
+        url = 'https://impactdevelopment.github.io/maven/'
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
 }
 
 dependencies {
+    implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'com.github.ZeroMemes:Alpine:3.1.0'
+
     implementation fileTree(dir: 'workspace/bin', include: ['*.jar'])
 }

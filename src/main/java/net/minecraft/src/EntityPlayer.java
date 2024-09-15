@@ -35,7 +35,7 @@ public abstract class EntityPlayer extends EntityLiving
         field_35214_aG = 0;
         timeUntilPortal = 20;
         inPortal = false;
-        field_35212_aW = new PlayerCapabilities();
+        playerCapabilities = new PlayerCapabilities();
         field_35215_ba = 0.1F;
         field_35213_bb = 0.02F;
         damageRemainder = 0;
@@ -166,11 +166,11 @@ public abstract class EntityPlayer extends EntityLiving
             closeScreen();
             craftingInventory = inventorySlots;
         }
-        if(field_35212_aW.field_35757_b)
+        if(playerCapabilities.field_35757_b)
         {
             for(int i = 0; i < 8; i++) { }
         }
-        if(fire > 0 && field_35212_aW.field_35759_a)
+        if(fire > 0 && playerCapabilities.field_35759_a)
         {
             fire = 0;
         }
@@ -578,7 +578,7 @@ public abstract class EntityPlayer extends EntityLiving
 
     public boolean attackEntityFrom(DamageSource damagesource, int i)
     {
-        if(field_35212_aW.field_35759_a && !damagesource.func_35529_d())
+        if(playerCapabilities.field_35759_a && !damagesource.func_35529_d())
         {
             return false;
         }
@@ -755,7 +755,7 @@ public abstract class EntityPlayer extends EntityLiving
                     entity.addVelocity(-MathHelper.sin((rotationYaw * 3.141593F) / 180F) * 1.0F, 0.10000000000000001D, MathHelper.cos((rotationYaw * 3.141593F) / 180F) * 1.0F);
                     motionX *= 0.59999999999999998D;
                     motionZ *= 0.59999999999999998D;
-                    func_35113_c(false);
+                    setSprinting(false);
                 }
                 if(flag)
                 {
@@ -1043,7 +1043,7 @@ public abstract class EntityPlayer extends EntityLiving
         double d = posX;
         double d1 = posY;
         double d2 = posZ;
-        if(field_35212_aW.field_35757_b)
+        if(playerCapabilities.field_35757_b)
         {
             double d3 = motionY;
             float f2 = field_35168_bw;
@@ -1146,7 +1146,7 @@ public abstract class EntityPlayer extends EntityLiving
 
     protected void fall(float f)
     {
-        if(field_35212_aW.field_35758_c)
+        if(playerCapabilities.field_35758_c)
         {
             return;
         }
@@ -1227,7 +1227,7 @@ public abstract class EntityPlayer extends EntityLiving
 
     public void func_35198_d(float f)
     {
-        if(field_35212_aW.field_35759_a)
+        if(playerCapabilities.field_35759_a)
         {
             return;
         }
@@ -1244,7 +1244,7 @@ public abstract class EntityPlayer extends EntityLiving
 
     public boolean func_35197_b(boolean flag)
     {
-        return (flag || field_35217_av.func_35770_c()) && !field_35212_aW.field_35759_a;
+        return (flag || field_35217_av.func_35770_c()) && !playerCapabilities.field_35759_a;
     }
 
     public boolean func_35194_au()
@@ -1314,7 +1314,7 @@ public abstract class EntityPlayer extends EntityLiving
     protected boolean inPortal;
     public float timeInPortal;
     public float prevTimeInPortal;
-    public PlayerCapabilities field_35212_aW;
+    public PlayerCapabilities playerCapabilities;
     public int field_35211_aX;
     public int field_35210_aY;
     public int field_35209_aZ;

@@ -4,8 +4,6 @@
 
 package net.minecraft.src;
 
-import java.util.Random;
-
 // Referenced classes of package net.minecraft.src:
 //            Item, EntityPlayer, Vec3D, MathHelper, 
 //            World, MovingObjectPosition, EnumMovingObjectType, Material, 
@@ -118,7 +116,7 @@ public class ItemBucket extends Item
                     {
                         world.setBlockAndMetadataWithNotify(i, j, k, isFull, 0);
                     }
-                    if(entityplayer.field_35212_aW.field_35756_d)
+                    if(entityplayer.playerCapabilities.field_35756_d)
                     {
                         return itemstack;
                     } else

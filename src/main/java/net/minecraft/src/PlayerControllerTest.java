@@ -4,7 +4,6 @@
 
 package net.minecraft.src;
 
-import java.util.List;
 import net.minecraft.client.Minecraft;
 
 // Referenced classes of package net.minecraft.src:
@@ -22,17 +21,17 @@ public class PlayerControllerTest extends PlayerController
 
     public static void func_35646_d(EntityPlayer entityplayer)
     {
-        entityplayer.field_35212_aW.field_35758_c = true;
-        entityplayer.field_35212_aW.field_35756_d = true;
-        entityplayer.field_35212_aW.field_35759_a = true;
+        entityplayer.playerCapabilities.field_35758_c = true;
+        entityplayer.playerCapabilities.field_35756_d = true;
+        entityplayer.playerCapabilities.field_35759_a = true;
     }
 
     public static void func_35645_e(EntityPlayer entityplayer)
     {
-        entityplayer.field_35212_aW.field_35758_c = false;
-        entityplayer.field_35212_aW.field_35757_b = false;
-        entityplayer.field_35212_aW.field_35756_d = false;
-        entityplayer.field_35212_aW.field_35759_a = false;
+        entityplayer.playerCapabilities.field_35758_c = false;
+        entityplayer.playerCapabilities.field_35757_b = false;
+        entityplayer.playerCapabilities.field_35756_d = false;
+        entityplayer.playerCapabilities.field_35759_a = false;
     }
 
     public void func_6473_b(EntityPlayer entityplayer)

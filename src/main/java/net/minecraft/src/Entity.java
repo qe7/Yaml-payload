@@ -1166,7 +1166,7 @@ public abstract class Entity
         return getEntityFlag(3);
     }
 
-    public void func_35113_c(boolean flag)
+    public void setSprinting(boolean flag)
     {
         setFlag(3, flag);
     }
