@@ -9,13 +9,15 @@ public final class Client {
 
     private static final Client instance = new Client();
 
-    private final EventBus eventBus = EventManager.builder().setName("client").build();
+    private final EventBus eventBus;
 
-    private final ModuleManager moduleManager = new ModuleManager();
-    private final CommandManager commandManager = new CommandManager();
+    private final ModuleManager moduleManager;
+    private final CommandManager commandManager;
 
     private Client() {
-
+        this.eventBus = EventManager.builder().setName("client").build();
+        this.moduleManager = new ModuleManager();
+        this.commandManager = new CommandManager();
     }
 
     public void initialize() {
